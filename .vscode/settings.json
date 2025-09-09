@@ -1,0 +1,12 @@
+{
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./PopulateTable",
+        "-p",
+        "*_test.py"
+    ],
+    "python.analysis.extraPaths": ["${workspaceFolder}/PopulateTable/src"],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
