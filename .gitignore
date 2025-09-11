@@ -1,6 +1,9 @@
 #Secret Files
 config.toml
 
+#Local Parquet with Testing
+*.parquet
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
