@@ -11,12 +11,16 @@ class CryptoPricing:
             configData = tomllib.load(configFile)
             configFile.close()
         self.DestinationBucket = str(configData.get("destination").get("blobstore")) # type: ignore
+
+        #The Crypto Pricing API is here: https://developers.coindesk.com/documentation/data-api/index_cc_v1_latest_tick
+        #The Coindesk API 'https://data-api.coindesk.com/index/cc/v1/latest/tick?market=cadli&instruments=BTC-USD,ETH-USD,XRP-USD&apply_mapping=true'
         self.PricingAPI = str(configData.get("crypto").get("api").get("url")) # type: ignore
         self.EndpointURL = str(configData.get("destination").get("filesystem").get("endpoint_url")) # type: ignore
         self.AWSKey = str(configData.get('destination').get('filesystem').get("aws_access_key_id")) #type: ignore
         self.AWSSecret = str(configData.get('destination').get('filesystem').get("aws_secret_access_key")) #type: ignore
         self.AWSRegion = str(configData.get('destination').get('filesystem').get("region_name")) #type: ignore
 
+    #Use this decorator to write to an S3 compliant bucket (Cloudflare R2 works)
     @staticmethod
     def WriteLatestPrice(func):
         @wraps(func)
@@ -40,7 +44,8 @@ class CryptoPricing:
                     Body = buffer.getvalue()
             )
         return wrapper
-            
+
+    #Use this decorator for local files      
     @staticmethod
     def LocalParquet(func):
         @wraps(func)
