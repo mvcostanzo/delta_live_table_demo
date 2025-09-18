@@ -30,8 +30,7 @@ class CryptoPricing:
                 region_name=self.AWSRegion,
                 endpoint_url=self.EndpointURL,
                 aws_access_key_id=self.AWSKey,
-                aws_secret_access_key=self.AWSSecret,
-                verify = False
+                aws_secret_access_key=self.AWSSecret
             )
             buffer = BytesIO()
             returnSet, unixTimestamp = func(self)
@@ -59,7 +58,7 @@ class CryptoPricing:
     def GetLatestPrice(self):
         session = r.Session()
         quoteURL = self.PricingAPI
-        response = session.get(quoteURL, verify=False)
+        response = session.get(quoteURL)
         responseStream = StringIO(response.text)
         
         BTCpricingDF = pl.read_json(responseStream).unnest('Data').unnest(['BTC-USD']).with_columns(pl.lit("BTC").alias("COIN"))
